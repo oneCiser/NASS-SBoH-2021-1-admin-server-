@@ -3,10 +3,10 @@ import {
 } from 'express';
 import { IRoute } from '../interfaces';
 import { ResourceUserController } from '../controller';
-import { isDefinedParamMiddleware, validationMiddleware, isRole } from '../middlewares';
+import { isRole,isDefinedParamMiddleware, validationMiddleware } from '../middlewares';
 import { maxsizeDTO } from '../dtos';
 import passport from 'passport';
-import { ROLES } from 'utils';
+import { ROLES } from '../utils';
 
 /**
  *
@@ -33,8 +33,8 @@ class UserRouter implements IRoute {
     );
     this.router.get(
       '/Listar', 
-      passport.authenticate('jwt',{session:false}),
-      isRole([ROLES.Admin]),
+      //passport.authenticate('jwt',{session:false}),
+      //isRole([ROLES.Admin]),
       (req: Request, res: Response, next: NextFunction) => ResourceUserController
       .list(req, res, next));
     
