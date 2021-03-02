@@ -18,7 +18,7 @@ const ResourceUserSchema: Schema<IUser> = new Schema({
   directory: {type:[],required:false},
   share_out: {type:[],required:false},
   share_in: {type:[],required:false}
-});
+}); 
 /**
  * @description genera un hash de el password cuando se crea el usuario o se actualiza la clave
  */

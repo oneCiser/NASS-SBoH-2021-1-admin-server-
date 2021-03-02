@@ -4,6 +4,6 @@ import UserRouter from './user.route';
 const router = Router();
 const prefix: string = '/api';
 
-router.use(`${prefix}/example`, UserRouter);
+router.use(`${prefix}/admin`, UserRouter);
 
 export default router;

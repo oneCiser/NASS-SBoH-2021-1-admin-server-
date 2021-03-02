@@ -1,6 +1,6 @@
 /* eslint-disable import/prefer-default-export */
-import ExampleDTO from './ExampleDTO';
+import maxsizeDTO from './maxsizeDTO';
 
 export {
-  ExampleDTO,
+  maxsizeDTO,
 };
