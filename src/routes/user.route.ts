@@ -25,14 +25,9 @@ class UserRouter implements IRoute {
   }
 
   createRoutes(): void {
+    
     this.router.get(
-      this.pathIdParam,
-      isDefinedParamMiddleware(),
-      (req: Request, res: Response, next: NextFunction) => ResourceUserController
-        .getById(req, res, next),
-    );
-    this.router.get(
-      '/Listar', 
+      '/listar', 
       //passport.authenticate('jwt',{session:false}),
       //isRole([ROLES.Admin]),
       (req: Request, res: Response, next: NextFunction) => ResourceUserController

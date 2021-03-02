@@ -2,6 +2,7 @@
 // getting-started.js
 import mongoose, { Connection } from 'mongoose';
 import { logger } from '../utils';
+import './dotenv';
 
 /**
  *
@@ -20,6 +21,7 @@ class Database {
   * @memberof Database
   */
  static connect(): Connection {
+   
    mongoose.connect(process.env.DB_URI || '', { useNewUrlParser: true, useUnifiedTopology: true })
      .then(() => logger.info('🟢 The database is connected.'))
      .catch((error) => logger.error(`🔴 Unable to connect to the database: ${error}.`));
