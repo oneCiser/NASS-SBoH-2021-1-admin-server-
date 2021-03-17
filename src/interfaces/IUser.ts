@@ -9,6 +9,7 @@ import { Document } from 'mongoose';
 interface IUser extends Document{
     username: String,
     password: String,
+    name: String,
     email: String,
     type_user: String,
     maxsize: Number,

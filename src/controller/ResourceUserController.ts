@@ -26,7 +26,18 @@ class ResourceUserController {
   public static async list(req: Request, res: Response, next: NextFunction) {
     try {
       const resources: Array<IUser> = await ResourceService.list();
-      res.json(resources);
+      const users = resources.map( (i) => {
+        const user = {
+          _id: i._id, 
+          name: i.name,
+          username: i.username,
+          email: i.email,
+          type_user: i.type_user,
+          maxsize: i.maxsize,
+        };
+        return user;
+      });
+      res.json({users}); 
     } catch (error) {
       return next(new HttpException(error.status || 500, error.message));
       
@@ -94,11 +105,11 @@ class ResourceUserController {
   public static async updateById(req: Request, res: Response, next: NextFunction) {
     try {
       const { id } = req.params;
-      const update = req.body;
+      const update = req.body; 
       const resourceUpdated: IUser | null = await ResourceService
         .updateById(id, update);
       if (!resourceUpdated) throw new HttpException(404, 'resource not found');
-      res.json(resourceUpdated);
+      res.json({maxsize: resourceUpdated.maxsize});
     } catch (error) {
       return next(new HttpException(error.status || 500, error.message));
     }
