@@ -40,13 +40,41 @@ class UserRouter implements IRoute {
       isRole([ROLES.Admin]),
       (req: Request, res: Response, next: NextFunction) => ResourceUserController.list(req,res, next)
     );
-    
+    /**
+     * @name admin/user
+     * @category Routes
+     * @function
+     * @description admin user change maxsize field from database
+     * @memberof module:routers/admin~adminRouter
+     * @inner
+     * @param {string} path - Express path
+     * @param {callback} passport - validation of req.body
+     * @param {callback} isRole - controller of login
+     */
     this.router.put(
       `/user${this.pathIdParam}`,
       passport.authenticate('jwt',{session:false}),
       isRole([ROLES.Admin]),
       (req: Request, res: Response, next: NextFunction) => ResourceUserController.updateById(req,res, next)
     );
+    /**
+     * @name admin/deleteuser
+     * @category Routes
+     * @function
+     * @description admin user delete user from database
+     * @memberof module:routers/admin~adminRouter
+     * @inner
+     * @param {string} path - Express path
+     * @param {callback} passport - validation of req.body
+     * @param {callback} isRole - controller of login
+     */
+     this.router.delete(
+      `/deleteuser${this.pathIdParam}`,
+      passport.authenticate('jwt',{session:false}),
+      isRole([ROLES.Admin]),
+      (req: Request, res: Response, next: NextFunction) => ResourceUserController.removeById(req,res, next)
+    );
+
   }
 }
 export default new UserRouter().router;

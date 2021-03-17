@@ -86,7 +86,7 @@ class ResourceUserController {
       const resource: IUser | null = await ResourceService
         .removeById(id);
       if (!resource) throw new HttpException(404, 'Resource not found');
-      res.json(resource);
+      res.json({_id: resource._id});
     } catch (error) {
       return next(new HttpException(error.status || 500, error.message));
     }
