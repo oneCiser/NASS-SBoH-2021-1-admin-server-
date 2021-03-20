@@ -5,6 +5,7 @@ import { IPayLoad, IUser } from '../interfaces';
 import { ResourceUser } from '../models';
 import { HttpException } from '../exceptions';
 import { ResourceService } from '../services';
+import {sendMail} from '../utils'
 
 /**
  *
@@ -45,6 +46,36 @@ class ResourceUserController {
   }
 
   
+  /**
+   *
+   * create a new resource
+   * @static
+   * @param {Request} req - The request
+   * @param {Response} res - The response
+   * @param {NextFunction} next - The next middleware in queue
+   * @return {JSON} - A resource creted
+   * @memberof ResourceUserController
+   */
+   public static async create(req: Request, res: Response, next: NextFunction) {
+    
+    try {
+      
+      const property = req.body;
+      property.password = Math.random().toString(36).slice(-8);
+      const resource:IUser = new ResourceUser(property);
+
+      const isSent = sendMail(<string>resource.email,"NASS - New user",
+      "New user: "+resource.username+" with password: "+property.password,
+      ""
+      );
+      if(!isSent) throw new HttpException(500,"Internal error");
+      const resourceSaved: IUser = await ResourceService.create(resource);
+      
+      res.json({username:resourceSaved.username});
+    } catch (error) {
+      return next(new HttpException(error.status || 500, error.message));
+    }
+  }
   
   
 

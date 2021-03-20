@@ -4,7 +4,7 @@ import {
 import { IRoute } from '../interfaces';
 import { ResourceUserController } from '../controller';
 import { isDefinedParamMiddleware, validationMiddleware, isRole } from '../middlewares';
-import { ExampleDTO } from '../dtos';
+import { ExampleDTO, UserDTO } from '../dtos';
 import passport from 'passport';
 import {ROLES} from '../utils'
 /**
@@ -74,6 +74,28 @@ class UserRouter implements IRoute {
       isRole([ROLES.Admin]),
       (req: Request, res: Response, next: NextFunction) => ResourceUserController.removeById(req,res, next)
     );
+
+     /**
+     * @name auth/forgot
+     * @category Routes
+     * @function
+     * @description create user by admin
+     * @memberof module:routers/auth~userRouter
+     * @inner
+     * @param {string} path - Express path
+     * @param {callback} validationMiddleware - validation of req.body
+     * @param {callback} authenticate - authenticate auth JWT
+     * @param {callback} isRole- validate role of user
+     * @param {callback} Controller - controller of create user
+     */
+      this.router.post(
+        '/createuser',
+        validationMiddleware(UserDTO),
+        passport.authenticate('jwt',{session:false}),
+        isRole([ROLES.Admin]),
+        (req: Request, res: Response, next: NextFunction) => ResourceUserController
+          .create(req, res, next)
+      );
 
   }
 }
